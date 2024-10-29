@@ -1,4 +1,4 @@
-import { Switch, View, Button, TextInput, Alert, Image } from "react-native";
+import { Switch, View, Button, TextInput, Alert, Image, Platform } from "react-native";
 import React, { useState } from "react";
 import styled from 'styled-components/native';
 import { useRouter } from 'expo-router';
@@ -107,18 +107,26 @@ export default function Index() {
         });
     }
 
+    const showAlert = (message: string) => {
+        if (Platform.OS === 'web' || Platform.OS === 'windows') {
+            window.alert(message);
+        } else {
+            Alert.alert(message);
+        }
+    };
+
     const validations = (email: string, password: string) => {
         if (password === '' || email === '') {
-            Alert.alert('Hay campos vacíos. Todos los campos son obligatorios');
+            showAlert('Los campos no pueden estar vacíos');
         } else if (email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)) {
             const passwordValidation = isPasswordValid(password);
             if (passwordValidation === 'VALID') {
-                Alert.alert('VALIDACIÓN EXITOSA');
+                showAlert('VALIDACIÓN EXITOSA');
             } else {
-                Alert.alert(passwordValidation);
+                showAlert(passwordValidation);
             }
         } else {
-            Alert.alert('El email debe tener un formato válido');
+            showAlert('El email debe tener un formato válido');
         }
     };
 

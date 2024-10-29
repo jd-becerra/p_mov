@@ -28,6 +28,9 @@ const TextView = styled(Box)`
 
 const Scroll = styled(ScrollView)`
     flex: 1;
+    background-color: none;
+    width: 280px;
+    height: 50px;
 `
 
 const TxtIn = styled(TextInput)`
@@ -46,6 +49,7 @@ const BtnView = styled(Box)`
     background-color: none;
     align-items: center;
     justify-content: top;
+    margin-top: 20px;
 `
 
 const PassView = styled(View)`
@@ -75,25 +79,33 @@ export default function Register() {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const router = useRouter();
 
+    const showAlert = (message: string) => {
+        if (Platform.OS === 'web' || Platform.OS === 'windows') {
+            window.alert(message);
+        } else {
+            Alert.alert(message);
+        }
+    }
+
     const validations = (email: string, password: string, confirmPassword: string) => {
         if (password === '' || email === '' || confirmPassword === '' || username === '') {
-            Alert.alert('Hay campos vacíos. Todos los campos son obligatorios');
+            showAlert('Todos los campos son obligatorios');
         } else if (email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)) {
             const passwordValidation = isPasswordValid(password);
             if (passwordValidation === 'VALID') {
                 if (password === confirmPassword) {
-                    Alert.alert('REGISTRO EXITOSO');
+                    showAlert('VALIDACIÓN EXITOSA');
                     router.push({
                         pathname: './login',
                     });
                 } else {
-                    Alert.alert('Las contraseñas no coinciden');
+                    showAlert('Las contraseñas no coinciden');
                 }
             } else {
-                Alert.alert(passwordValidation);
+                showAlert(passwordValidation);
             }
         } else {
-            Alert.alert('El email debe tener un formato válido');
+            showAlert('El email no tiene formato válido');
         }
     };
 
@@ -102,10 +114,9 @@ export default function Register() {
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 keyboardVerticalOffset={80}
             >
-            <Scroll
+            <Scroll keyboardShouldPersistTaps='handled'
                     contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignContent: 'center' }}
                 >
-                <TextView>
                     <TxtIn placeholder="Email" value={email} onChangeText={setEmail} />
                     <TxtIn placeholder="Nombre de usuario" value={username} onChangeText={setUsername} />
                     <PassView>
@@ -113,10 +124,9 @@ export default function Register() {
                         <Switch value={showPassword} onValueChange={setShowPassword} />
                     </PassView>
                     <PassView>
-                        <PassIn placeholder="Confirmar Contraseña" value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry={!showPassword} />
+                        <PassIn placeholder="Confirmar Contraseña" value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry={!showConfirmPassword} />
                         <Switch value={showConfirmPassword} onValueChange={setShowConfirmPassword} />
                     </PassView>
-                </TextView>
                 <BtnView>
                     <Btn title="Registrarse" onPress={() => validations(email, password, confirmPassword)} />
                 </BtnView>
