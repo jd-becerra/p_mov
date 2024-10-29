@@ -133,7 +133,9 @@ export default function Index() {
     return (
         <MainContainer>
             <ImgView>
-                <Img source={{uri: 'https://reactnative.dev/docs/assets/p_cat2.png'}} style={{width: 150, height: 150}} />
+                <Img 
+                testID="icon-image"
+                source={{uri: 'https://reactnative.dev/docs/assets/p_cat2.png'}} style={{width: 150, height: 150}} />
             </ImgView>  
             <TextView>
                 <EmailIn placeholder="Email" value={email} onChangeText={setEmail} />
