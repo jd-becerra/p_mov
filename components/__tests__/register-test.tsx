@@ -2,7 +2,7 @@ import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { Alert } from 'react-native';
 import Register from '../../app/register';
-import { useRouter } from 'expo-router';
+// import { useRouter } from 'expo-router';
 
 // Mock Alert and useRouter modules
 jest.mock('react-native/Libraries/Alert/Alert', () => ({
@@ -111,6 +111,8 @@ describe('Register', () => {
         fireEvent.changeText(confirmPasswordInput, 'A12345678@');
         fireEvent.press(button);
         expect(Alert.alert).toHaveBeenCalledWith('VALIDACIÓN EXITOSA');
+        
+        // Esta linea simula moverse a la pantalla de login 
         expect(mockPush).toHaveBeenCalledWith({ pathname: './login' });
     });
 });

@@ -13,6 +13,13 @@ jest.mock('react-native/Libraries/Alert/Alert', () => ({
     alert: jest.fn(),
 }));
 
+const mockPush = jest.fn();
+jest.mock('expo-router', () => ({
+    useRouter: () => ({
+        push: mockPush
+    }),
+}));
+
 describe('Login', () => {
     it('renders correctly', () => {
         render(<Login />);
@@ -23,6 +30,15 @@ describe('Login', () => {
         expect(screen.getByText('Iniciar Sesión')).toBeTruthy;
         expect(screen.getByText('Registrarse')).toBeTruthy;
         expect(screen.getByTestId('icon-image')).toBeTruthy;
+    });
+
+    it('can redirect to Register', () => {
+        render(<Login />);
+
+        const registerButton = screen.getByText('Registrarse');
+        fireEvent.press(registerButton);
+
+        expect(mockPush).toHaveBeenCalledWith({pathname: './register'});
     });
 
     it('validates email', () => {
