@@ -2,6 +2,7 @@ import { Switch, View, Button, TextInput, Alert, Image } from "react-native";
 import React, { useState } from "react";
 import styled from 'styled-components/native';
 import { useRouter } from 'expo-router';
+import { getMusicData } from "./api-client";
 
 // Flex : tomar todo el espacio disponible
 // flexDirection: {row | dolumn} los elementos se alinean en filas o columnas segun parametro
@@ -78,18 +79,17 @@ const isPasswordValid = (password: string) => {
 }
 
 export default function Index() {
+    getMusicData().then(data => console.warn(data));
+
     const router = useRouter();
-    const onPressRegister = () => {
+    const redirect = (path: any) => {
         router.push({
-            pathname: '/register',
+            pathname: path,
         });
     }
 
-    const onPressLogin = () => {
-        router.push({
-            pathname: '/login',
-        });
-    }
+    // <Btn title="Iniciar Sesión" onPress={() => redirect('/login')}/>
+    // <Btn title="Registrarse" onPress={() => redirect('/register')}/>
 
     return (
         <MainContainer>
@@ -99,8 +99,7 @@ export default function Index() {
                 source={{uri: 'https://reactnative.dev/docs/assets/p_cat2.png'}} style={{width: 150, height: 150}} />
             </ImgView>
             <BtnView>
-                <Btn title="Iniciar Sesión" onPress={onPressLogin} />
-                <Btn title="Registrarse" onPress={onPressRegister} />
+                <Btn title="Home" onPress={() => redirect('/home')}/>
             </BtnView>
         </MainContainer>
     )
