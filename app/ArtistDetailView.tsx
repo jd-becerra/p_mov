@@ -38,15 +38,13 @@ interface ArtistDetailViewProps {
     image: string;
 }
 
-const ArtistDetailView: React.FC<ArtistDetailViewProps> = () => {
+const ArtistDetailView: React.FC = () => {
     const { id, name, image } = useLocalSearchParams();
-
-    console.log('ArtistDetailView', { id, name, image });
 
     return (
         <MainContainer>
             {typeof image === 'string' && (
-                <Img source={{ uri: image }} />
+                <Img source={{ uri: image }}  testID="artist-image"/>
             )}
             <TxtContainer>
                 <Txt style={{ fontWeight: 'bold' }}>{name}</Txt>

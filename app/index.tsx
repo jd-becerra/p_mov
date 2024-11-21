@@ -88,8 +88,7 @@ export default function Index() {
         });
     }
 
-    // <Btn title="Iniciar Sesión" onPress={() => redirect('/login')}/>
-    // <Btn title="Registrarse" onPress={() => redirect('/register')}/>
+
 
     return (
         <MainContainer>
@@ -100,6 +99,8 @@ export default function Index() {
             </ImgView>
             <BtnView>
                 <Btn title="Home" onPress={() => redirect('/home')}/>
+                <Btn title="Iniciar Sesión" onPress={() => redirect('/login')}/>
+                <Btn title="Registrarse" onPress={() => redirect('/register')}/>
             </BtnView>
         </MainContainer>
     )

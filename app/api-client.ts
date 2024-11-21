@@ -1,11 +1,9 @@
 import { ArtistResource } from "@/types/artist";
 
-const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
+const API_KEY = "0d6a3580b51d85ed3c7c9bf87ae1b18d";
 const URL = `https://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&country=spain&api_key=${API_KEY}&format=json`;
 
 function getMusicData() {
-    console.log("FETCH URL: " + URL);
-    console.log("process: " + process.env.EXPO_PUBLIC_API_KEY);
     return fetch(URL, {
         method: 'GET',
         headers: {
